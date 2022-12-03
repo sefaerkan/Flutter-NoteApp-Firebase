@@ -12,9 +12,11 @@ class NoteReaderScreen extends StatefulWidget {
 }
 
 class _NoteReaderScreenState extends State<NoteReaderScreen> {
+
   @override
   Widget build(BuildContext context) {
     int color_id = widget.doc["color_id"];
+
     return Scaffold(
       backgroundColor: AppStyle.cardsColor[color_id],
       appBar: AppBar(
@@ -43,6 +45,19 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.red,
+        onPressed: () async {
+          FirebaseFirestore.instance .collection("Notes").doc(widget.doc.id).delete().then((value) {
+            Navigator.pop(context);
+          }).catchError((error) => print("Failed $error"));
+        },
+        child: Icon(
+          Icons.delete,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }
+
