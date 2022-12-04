@@ -68,18 +68,27 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppStyle.accentColor,
         onPressed: () async {
-          FirebaseFirestore.instance.collection("Notes").add({
-            "notes_title" : _titleController.text,
-            "creation_date" : date,
-            "note_content" : _mainController.text,
-            "color_id": color_id,
-          }).then((value) {
-            print(value.id);
-            Navigator.pop(context);
-          }).catchError((error) => print("Failed $error"));
+          if(_titleController.text.isNotEmpty && _mainController.text.isNotEmpty ) {
+            FirebaseFirestore.instance.collection("Notes").add({
+              "notes_title" : _titleController.text,
+              "creation_date" : date,
+              "note_content" : _mainController.text,
+              "color_id": color_id,
+            }).then((value) {
+              print(value.id);
+              Navigator.pop(context);
+            }).catchError((error) => print("Failed $error"));
+          } else {
+            final snackbar = SnackBar(
+              content: Text("Title and Content can't be empty!!!"),
+              backgroundColor: Colors.black,
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackbar);
+          }
         },
         child: Icon(Icons.save),
       ),
+      
     );
   }
 }

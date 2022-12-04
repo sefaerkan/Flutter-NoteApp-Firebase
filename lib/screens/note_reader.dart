@@ -22,6 +22,8 @@ class _NoteReaderScreenState extends State<NoteReaderScreen> {
       appBar: AppBar(
         backgroundColor: AppStyle.cardsColor[color_id],
         elevation: 0.0,
+        iconTheme: IconThemeData(color: Colors.black),
+        centerTitle: true,
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
